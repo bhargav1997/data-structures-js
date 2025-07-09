@@ -130,6 +130,134 @@ tree.inOrder(); // 20 30 40 50 60 70 80 (sorted order)
 
 ---
 
+### ✅ How to Delete a Node from a Binary Search Tree (BST)
+
+Deleting a node from a BST involves **3 possible cases**:
+
+---
+
+### 🧨 1. **Node has NO children (a leaf)**
+
+Just remove it.
+
+```
+Before:
+     50
+    /  \
+  30    70
+        /
+      60
+
+Delete 60 → just remove it
+
+After:
+     50
+    /  \
+  30    70
+```
+
+---
+
+### 🌿 2. **Node has ONE child**
+
+Replace it with its child.
+
+```
+Before:
+     50
+    /  \
+  30    70
+          \
+          80
+
+Delete 70 → replace 70 with 80
+
+After:
+     50
+    /  \
+  30    80
+```
+
+---
+
+### 🌳 3. **Node has TWO children**
+
+Replace the node with its **in-order successor** (smallest in the right subtree) or **in-order predecessor** (largest in the left).
+
+```
+Before:
+     50
+    /  \
+  30    70
+       /  \
+     60    80
+
+Delete 50 → find in-order successor = 60  
+Replace 50 with 60
+
+After:
+     60
+    /  \
+  30    70
+           \
+           80
+```
+
+---
+
+### 💻 JavaScript Code for Delete Operation
+
+```javascript
+delete(value, node = this.root) {
+  if (!node) return null;
+
+  if (value < node.value) {
+    node.left = this.delete(value, node.left);
+  } else if (value > node.value) {
+    node.right = this.delete(value, node.right);
+  } else {
+    // Node found
+    // Case 1: No child
+    if (!node.left && !node.right) return null;
+
+    // Case 2: One child
+    if (!node.left) return node.right;
+    if (!node.right) return node.left;
+
+    // Case 3: Two children
+    let min = this.findMin(node.right);
+    node.value = min.value;
+    node.right = this.delete(min.value, node.right);
+  }
+  return node;
+}
+
+findMin(node) {
+  while (node.left) {
+    node = node.left;
+  }
+  return node;
+}
+```
+
+Make sure you place `delete()` and `findMin()` inside your BST class.
+
+---
+
+### 🧪 ✅ Interactive BST Simulator (Demo Links):
+
+Here are some excellent **graphical simulators** to visualize insert, search, and delete:
+
+1. 🔗 **BST Visualizer**
+   [https://visualgo.net/en/bst](https://visualgo.net/en/bst)
+   (Click "BST" from the side menu → use insert/delete buttons)
+
+2. 🔗 **BST Animation (by CS50)**
+   [https://www.cs.usfca.edu/\~galles/visualization/BST.html](https://www.cs.usfca.edu/~galles/visualization/BST.html)
+   (Click to insert/delete values and see the tree animate)
+
+---
+
 ```js
 /* Binary Search Tree */
 
