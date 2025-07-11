@@ -116,3 +116,83 @@ Let’s say this is the BST:
 
 For all traversal methods, you usually need a **recursive function** and optionally an array to store the result instead of `console.log`.
 
+---
+
+## ⚖️ What is a Balanced Binary Tree?
+
+> A binary tree is **balanced** if, for **every node**, the **height difference between the left and right subtree is not more than 1**.
+
+Formally:
+
+```
+Math.abs(height(left) - height(right)) <= 1
+```
+
+---
+
+## 🧠 Logic to Check if Tree is Balanced
+
+### ✅ Efficient O(n) approach (bottom-up):
+
+* Recursively calculate the height of each subtree.
+* If **any subtree is unbalanced**, return `-1` as a flag.
+
+```js
+isBalanced(node = this.root) {
+  function checkHeight(n) {
+    if (!n) return 0;
+
+    const left = checkHeight(n.left);
+    if (left === -1) return -1;
+
+    const right = checkHeight(n.right);
+    if (right === -1) return -1;
+
+    if (Math.abs(left - right) > 1) return -1;
+
+    return 1 + Math.max(left, right);
+  }
+
+  return checkHeight(node) !== -1;
+}
+```
+
+---
+
+## 🧪 Example:
+
+This tree is **balanced**:
+
+```
+       10
+      /  \
+     5    15
+```
+
+But this is **not balanced**:
+
+```
+      10
+        \
+         20
+           \
+            30
+```
+
+---
+
+## ⏱ Time Complexity:
+
+* ✅ Efficient version: `O(n)` — each node visited once.
+* ❌ Inefficient version (using separate height calls): `O(n²)`
+
+---
+
+## 🧪 Want to test this?
+
+You can add this method to your `BST` class and run:
+
+```js
+console.log(tree.isBalanced()); // true or false
+```
+
